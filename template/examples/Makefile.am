@@ -6,3 +6,5 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
 bin_PROGRAMS = example
 
 example_SOURCES = example_main.cpp
+
+example_LDADD = -lpthread

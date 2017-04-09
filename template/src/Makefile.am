@@ -5,3 +5,5 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
 bin_PROGRAMS = {}
 
 {}_SOURCES = main.cpp
+
+{}_LDADD = -lpthread
