@@ -81,10 +81,11 @@ def LoadConf():
     if os.getenv('CPC_CONF'): CPC_CONF = os.getenv('CPC_CONF')
     emailConf = 'DEFAULT_EMAIL'
     versionConf = 'DEFAULT_VERSION'
-    with open(CPC_CONF) as file:
-        conf = json.load(file)
-        if emailConf in conf.keys(): EMAIL=conf[emailConf]
-        if versionConf in conf.keys(): VERSION=conf[versionConf]
+    if os.path.exists(CPC_CONF):
+        with open(CPC_CONF) as file:
+            conf = json.load(file)
+            if emailConf in conf.keys(): EMAIL=conf[emailConf]
+            if versionConf in conf.keys(): VERSION=conf[versionConf]
 
 def Help():
     print('create an empty automake-builded cpp project')
