@@ -1,12 +1,17 @@
+#!/usr/bin/env python
+
 import os
 import sys
+import json
 import getopt
 import shutil
+import ConfigParser
 
-CPC_ROOT = '/Users/linjw/workspace/cpp-project-creator/'
+CPC_CONF = os.path.join(os.getenv('HOME'), '.cpc.json')
+CPC_ROOT = os.path.join(os.getenv('HOME'), '.cpc')
 TEMPLATE = os.path.join(CPC_ROOT, 'template')
-
 PWD = os.path.abspath(os.curdir)
+
 VERSION = 'VERSION'
 EMAIL = 'BUG-REPORT-ADDRESS'
 
@@ -70,5 +75,17 @@ def main(argv):
     else: shutil.copytree(TEMPLATE, dst)
     InitProj(dst or PWD, proj, version, email)
 
+def LoadConf():
+    global CPC_CONF,CPC_ROOT,VERSION,EMAIL
+    if os.getenv('CPC_ROOT'): CPC_ROOT = os.getenv('CPC_ROOT')
+    if os.getenv('CPC_CONF'): CPC_CONF = os.getenv('CPC_CONF')
+    emailConf = 'DEFAULT_EMAIL'
+    versionConf = 'DEFAULT_VERSION'
+    with open(CPC_CONF) as file:
+        conf = json.load(file)
+        if emailConf in conf.keys(): EMAIL=conf[emailConf]
+        if versionConf in conf.keys(): VERSION=conf[versionConf]
+
 if __name__ == '__main__':
+    LoadConf()
     main(sys.argv)
