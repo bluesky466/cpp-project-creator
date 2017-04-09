@@ -86,6 +86,22 @@ def LoadConf():
         if emailConf in conf.keys(): EMAIL=conf[emailConf]
         if versionConf in conf.keys(): VERSION=conf[versionConf]
 
+def Help():
+    print('create an empty automake-builded cpp project')
+    print('arguments:')
+    print('\t-p project name')
+    print('\t-v project version')
+    print('\t-e project bug report address')
+    print('config:')
+    print('\twrite .cpc.json on $HOME')
+    print('\t.cpc.json setup DEFAULT_EMAIL and DEFAULT_VERSION as string')
+
 if __name__ == '__main__':
-    LoadConf()
-    main(sys.argv)
+    if sys.argv[1] in ['--help', '-help', '-h']:
+        Help()
+    else:
+        try:
+            LoadConf()
+            main(sys.argv)
+        except Exception,e:
+            Help()
